@@ -1,5 +1,5 @@
 {
-  "id": "da943633-28d7-4f3a-997d-7702e779fb20",
+  "id": "4dbea811-30dd-4035-a0d5-2a0fdfe14e9b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -58,7 +58,7 @@
         },
         "district": {
           "name": "district",
-          "type": "varchar",
+          "type": "varchar(3)",
           "primaryKey": false,
           "notNull": true
         },

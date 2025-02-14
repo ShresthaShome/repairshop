@@ -7,7 +7,7 @@ CREATE TABLE "customers" (
 	"address1" varchar NOT NULL,
 	"address2" varchar,
 	"upazilla" varchar NOT NULL,
-	"district" varchar NOT NULL,
+	"district" varchar(3) NOT NULL,
 	"zip" varchar(4) NOT NULL,
 	"notes" text,
 	"active" boolean DEFAULT true NOT NULL,

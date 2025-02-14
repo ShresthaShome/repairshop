@@ -6,7 +6,7 @@ export const insertCustomerSchema = createInsertSchema(customers, {
   lastName: (schema) => schema.min(1, "Last name is required!"),
   address1: (schema) => schema.min(1, "Address is required!"),
   upazilla: (schema) => schema.min(1, "Upazilla is required!"),
-  district: (schema) => schema.min(1, "District is required!"),
+  district: (schema) => schema.length(3, "District is required!"),
   email: (schema) => schema.email("Invalid e-mail address!"),
   zip: (schema) =>
     schema.regex(

@@ -52,7 +52,9 @@ export default function SelectWithLabel<S>({
                 id={nameInSchema}
                 className={`w-full max-w-xs ${className}`}
               >
-                <SelectValue placeholder="Select" />
+                <SelectValue placeholder="Select a tech">
+                  {field.value}
+                </SelectValue>
               </SelectTrigger>
             </FormControl>
 

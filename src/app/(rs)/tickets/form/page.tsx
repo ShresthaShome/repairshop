@@ -4,6 +4,47 @@ import { getTicket } from "@/lib/queries/getTicket";
 import * as Sentry from "@sentry/nextjs";
 import TicketForm from "@/app/(rs)/tickets/form/TicketForm";
 
+import { init as kindeInit, Users } from "@kinde/management-api-js";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+
+const { getPermission, getUser } = getKindeServerSession();
+const [managerPermission, user] = await Promise.all([
+  getPermission("manager"),
+  getUser(),
+]);
+const isManager = managerPermission?.isGranted;
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
+  const { customerId, ticketId } = await searchParams;
+  if (!customerId && !ticketId)
+    return { title: "Miising Ticket ID or Customer ID" };
+
+  if (customerId && !ticketId) {
+    const customer = await getCustomer(parseInt(customerId));
+
+    if (!customer) return { title: "Customer Not Found" };
+    if (!customer.active) return { title: "Customer Not Active" };
+    return { title: `Ticket for Customer #${customerId}` };
+  }
+
+  if (ticketId) {
+    const ticket = await getTicket(parseInt(ticketId));
+    if (!ticket) return { title: "Ticket Not Found" };
+
+    return {
+      title: `${
+        user.email?.toLowerCase() === ticket.tech.toLowerCase() || isManager
+          ? "Update"
+          : "View"
+      } Ticket #${ticketId}`,
+    };
+  }
+}
+
 export default async function TicketFormPage({
   searchParams,
 }: {
@@ -51,11 +92,19 @@ export default async function TicketFormPage({
       }
 
       // TODO
-      console.log(customer);
-      return <TicketForm customer={customer} />;
+      if (isManager) {
+        kindeInit();
+        const { users } = await Users.getUsers();
+
+        const techs = users
+          ? users.map((user) => ({ id: user.id!, description: user.email! }))
+          : [];
+
+        return <TicketForm customer={customer} techs={techs} />;
+      } else return <TicketForm customer={customer} />;
     }
 
-    if (ticketId && !customerId) {
+    if (ticketId) {
       const ticket = await getTicket(parseInt(ticketId));
 
       if (!ticket) {
@@ -70,9 +119,26 @@ export default async function TicketFormPage({
       const customer = await getCustomer(ticket.customerId);
 
       // TODO
-      console.log("ticket: ", ticket);
-      console.log("customer: ", customer);
-      return <TicketForm customer={customer} ticket={ticket} />;
+      if (isManager) {
+        kindeInit();
+        const { users } = await Users.getUsers();
+
+        const techs = users
+          ? users.map((user) => ({ id: user.id!, description: user.email! }))
+          : [];
+
+        return <TicketForm customer={customer} ticket={ticket} techs={techs} />;
+      } else {
+        const isEditable =
+          user.email?.toLowerCase() === ticket.tech.toLowerCase();
+        return (
+          <TicketForm
+            customer={customer}
+            ticket={ticket}
+            isEditable={isEditable}
+          />
+        );
+      }
     }
   } catch (e) {
     if (e instanceof Error) {

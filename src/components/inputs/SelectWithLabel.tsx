@@ -52,7 +52,7 @@ export default function SelectWithLabel<S>({
                 id={nameInSchema}
                 className={`w-full max-w-xs ${className}`}
               >
-                <SelectValue placeholder="Select a tech">
+                <SelectValue placeholder={`Select a ${nameInSchema}`}>
                   {field.value}
                 </SelectValue>
               </SelectTrigger>
@@ -60,8 +60,11 @@ export default function SelectWithLabel<S>({
 
             <SelectContent>
               {data.map((x) => (
-                <SelectItem key={`${nameInSchema}_${x.id}`} value={x.id}>
-                  {x.description} ({x.id})
+                <SelectItem
+                  key={`${nameInSchema}_${x.id}`}
+                  value={nameInSchema === "tech" ? x.description : x.id}
+                >
+                  {x.description} {nameInSchema === "district" && `(${x.id})`}
                 </SelectItem>
               ))}
             </SelectContent>

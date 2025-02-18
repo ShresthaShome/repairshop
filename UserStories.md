@@ -13,10 +13,10 @@
 11. [x] Tickets are either OPEN or COMPLETED
 12. [x] Tickets are assigned to specific employees
 13. [x] Users can have Employee, Manager, or Admin permissions
-14. [x] All users can create and view tickets
-15. [x] All users can create, edit and view customers
-16. [ ] Employees can only edit their assigned tickets
-17. [ ] Managers and Admins can view, edit, and delete all tickets
+14. [ ] All users can create and view tickets
+15. [ ] All users can create, edit and view customers
+16. [x] Employees can only edit their assigned tickets
+17. [x] Managers and Admins can view, edit, and delete all tickets
 18. [ ] Desktop mode is most important but the app should be usable on tablet devices as well.
 19. [x] Light / Dark mode option requested by employees
 20. [x] Expects quick support if anything goes wrong with the app

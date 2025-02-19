@@ -1,4 +1,4 @@
-export const DistrictsArray = [
+export const DistrictsArray: { id: string; description: string }[] = [
   { id: "DHA", description: "Dhaka" },
   { id: "FAR", description: "Faridpur" },
   { id: "GAZ", description: "Gazipur" },

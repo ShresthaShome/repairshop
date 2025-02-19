@@ -21,8 +21,8 @@ export default function Home() {
             Tangail, Bangladesh.
           </address>
           <p>Open: 10 A.M. to 8 P.M. (Daily)</p>
-          <Link href="tel:02987654312" className="hover:underline">
-            02987-654312
+          <Link href="tel:+8801518946109" className="hover:underline">
+            +8801518946109
           </Link>
         </div>
       </main>

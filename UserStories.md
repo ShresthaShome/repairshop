@@ -4,7 +4,7 @@
 2. [x] Add a public facing page with basic contact info
 3. [x] Add a passwordless employee login to the app
 4. [ ] Show a real-time open tickets page after login
-5. [ ] Provide easy navigation & search for customers & tickets
+5. [x] Provide easy navigation & search for customers & tickets
 6. [x] Provide a logout option
 7. [x] Require users to login at least once per week
 8. [x] Provide a way to remove employee access asap if needed

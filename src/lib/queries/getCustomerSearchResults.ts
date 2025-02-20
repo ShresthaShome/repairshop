@@ -1,16 +1,11 @@
-import { DistrictsArray } from "@/constants/DistrictsArray";
 import { db } from "@/db";
 import { customers } from "@/db/schema";
-import { ilike, or } from "drizzle-orm";
+import { ilike, or, sql } from "drizzle-orm";
+import { reasonDistrictQuery } from "@/lib/actions";
 
 export default async function getCustomerSearchResults(searchText: string) {
-  const dist =
-    DistrictsArray.find(
-      (dist) =>
-        dist.description.toLowerCase() === searchText.trim().toLowerCase() ||
-        dist.id.toLowerCase() === searchText.trim().toLowerCase() ||
-        dist.description.toLowerCase().includes(searchText.trim().toLowerCase())
-    )?.id || searchText;
+  const dist = reasonDistrictQuery(searchText);
+  searchText = searchText.trim();
 
   const results = await db
     .select()
@@ -26,7 +21,10 @@ export default async function getCustomerSearchResults(searchText: string) {
         ilike(customers.upazilla, `%${searchText}%`),
         ilike(customers.district, `%${dist}%`),
         ilike(customers.zip, `%${searchText}%`),
-        ilike(customers.notes, `%${searchText}%`)
+        ilike(customers.notes, `%${searchText}%`),
+        sql`lower(concat(${customers.firstName}, ' ', ${
+          customers.lastName
+        })) LIKE ${`%${searchText.toLowerCase().replace(" ", "%")}%`}`
       )
     );
   return results;

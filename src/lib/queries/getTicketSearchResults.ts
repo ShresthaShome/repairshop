@@ -1,16 +1,11 @@
-import { DistrictsArray } from "@/constants/DistrictsArray";
 import { db } from "@/db";
 import { customers, tickets } from "@/db/schema";
 import { eq, ilike, or } from "drizzle-orm";
+import { reasonDistrictQuery } from "@/lib/actions";
 
 export default async function getTicketSearchResults(searchText: string) {
-  const dist =
-    DistrictsArray.find(
-      (dist) =>
-        dist.description.toLowerCase() === searchText.trim().toLowerCase() ||
-        dist.id.toLowerCase() === searchText.trim().toLowerCase() ||
-        dist.description.toLowerCase().includes(searchText.trim().toLowerCase())
-    )?.id || searchText;
+  const dist = reasonDistrictQuery(searchText);
+  searchText = searchText.trim();
 
   const results = await db
     .select({

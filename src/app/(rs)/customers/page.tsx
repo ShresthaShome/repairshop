@@ -28,7 +28,7 @@ export default async function Customers({
       {results.length ? (
         <CustomerTable data={results} />
       ) : (
-        <p className="mt-4">No results!</p>
+        <p className="mt-4">No Customers Found!</p>
       )}
     </div>
   );

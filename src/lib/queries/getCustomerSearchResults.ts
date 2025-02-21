@@ -12,8 +12,6 @@ export default async function getCustomerSearchResults(searchText: string) {
     .from(customers)
     .where(
       or(
-        ilike(customers.firstName, `%${searchText}%`),
-        ilike(customers.lastName, `%${searchText}%`),
         ilike(customers.email, `%${searchText}%`),
         ilike(customers.phone, `%${searchText}%`),
         ilike(customers.address1, `%${searchText}%`),
@@ -21,7 +19,6 @@ export default async function getCustomerSearchResults(searchText: string) {
         ilike(customers.upazilla, `%${searchText}%`),
         ilike(customers.district, `%${dist}%`),
         ilike(customers.zip, `%${searchText}%`),
-        ilike(customers.notes, `%${searchText}%`),
         sql`lower(concat(${customers.firstName}, ' ', ${
           customers.lastName
         })) LIKE ${`%${searchText.toLowerCase().replace(" ", "%")}%`}`

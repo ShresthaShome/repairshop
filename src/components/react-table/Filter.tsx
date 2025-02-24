@@ -3,14 +3,15 @@ import DebouncedInput from "@/components/react-table/DebouncedInput";
 
 type Props<T> = {
   column: Column<T, unknown>;
+  filteredRows: string[];
 };
 
-export default function Filter<T>({ column }: Props<T>) {
+export default function Filter<T>({ column, filteredRows }: Props<T>) {
   const conlumnFilterValue = column.getFilterValue();
 
-  const sortedUniqueValues = Array.from(
-    column.getFacetedUniqueValues().keys()
-  ).sort();
+  const uniqueFilteredValues = new Set(filteredRows);
+
+  const sortedUniqueValues = Array.from(uniqueFilteredValues).sort();
 
   return (
     <>
@@ -23,9 +24,7 @@ export default function Filter<T>({ column }: Props<T>) {
         type="text"
         value={(conlumnFilterValue ?? "") as string}
         onChange={(value) => column.setFilterValue(value)}
-        placeholder={`Filter... (${
-          [...column.getFacetedUniqueValues()].filter((arr) => arr[0]).length
-        })`}
+        placeholder={`Filter... (${uniqueFilteredValues.size})`}
         className="w-full border shadow rounded bg-card"
         list={column.id + "List"}
       />

@@ -10,6 +10,7 @@ export default function CustomerSearch() {
         type="text"
         placeholder="Search Customers"
         className="w-full dark:border-gray-400 border-gray-300"
+        autoFocus
       />
       <SearchButton />
     </Form>

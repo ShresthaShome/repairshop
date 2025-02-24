@@ -60,10 +60,7 @@ export default function SelectWithLabel<S>({
 
             <SelectContent>
               {data.map((x) => (
-                <SelectItem
-                  key={`${nameInSchema}_${x.id}`}
-                  value={nameInSchema === "tech" ? x.description : x.id}
-                >
+                <SelectItem key={`${nameInSchema}_${x.id}`} value={x.id}>
                   {x.description} {nameInSchema === "district" && `(${x.id})`}
                 </SelectItem>
               ))}

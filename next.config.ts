@@ -10,7 +10,7 @@ export default withSentryConfig(nextConfig, {
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
   org: "shrestha-shome-ullas",
-  project: "repaireshop",
+  project: "repairshop",
 
   authToken: process.env.SENTRY_AUTH_TOKEN,
 

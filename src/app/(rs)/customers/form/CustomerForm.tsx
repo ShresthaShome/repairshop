@@ -88,7 +88,7 @@ export default function CustomerForm({ customer, isManager = false }: Props) {
         description: data?.message,
       });
     },
-    onError(error) {
+    onError() {
       toast({
         variant: "destructive",
         title: "Error! 🚨💀",
